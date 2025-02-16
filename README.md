@@ -1,8 +1,8 @@
 # Task Reminder Web Application - Project Design Document
 
 **Version:** 1.0
-**Date:** October 26, 2023
-**Authors:** [Your Name/Team Name]
+**Date:** Feb 16, 2025
+**Authors:** [Allan]
 
 ## 1. Introduction
 
