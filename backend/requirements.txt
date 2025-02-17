@@ -1,0 +1,14 @@
+Flask==2.3.3
+Flask-SQLAlchemy==3.1.1
+Flask-RESTful==0.3.10
+Flask-Bcrypt==1.0.1
+Flask-Mail==0.9.1
+PyJWT==2.8.0
+python-dotenv==1.0.0
+itsdangerous==2.1.2
+SQLAlchemy==2.0.22
+Werkzeug==3.0.1
+gunicorn==21.2.0
+# Add your database driver here (one of these):
+# psycopg2-binary  # For PostgreSQL
+# mysqlclient      # For MySQL
