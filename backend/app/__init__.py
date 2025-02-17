@@ -24,5 +24,9 @@ def create_app(config_class=Config):
     app.register_blueprint(auth_bp)
     app.register_blueprint(task_bp)
 
+    # Add a root route
+    @app.route('/')
+    def home():
+        return "Welcome to the Flask Application!"
 
     return app
