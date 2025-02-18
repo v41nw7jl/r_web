@@ -1,4 +1,5 @@
 # backend/app/routes/task_routes.py
+
 from flask import request, jsonify, Blueprint
 from flask_restful import Resource, Api, reqparse
 from app.models import Task
@@ -27,11 +28,13 @@ task_update_parser.add_argument('is_complete', type=bool)
 class TaskList(Resource):
     @authenticate
     def get(self, user):
+        print("--- TaskList.get() called ---")  # Add this
         tasks = TaskService.get_all_tasks(user.id)
         return jsonify(tasks)
 
     @authenticate
     def post(self, user):
+        print("--- TaskList.post() called ---")  # Add this
         args = task_parser.parse_args()
         try:
             due_date = datetime.strptime(args['due_date'], '%Y-%m-%d').date()
@@ -41,13 +44,16 @@ class TaskList(Resource):
             )
             return jsonify(new_task), 201
         except ValueError as e:
-             return {'message': str(e)}, 400
+            print(f"--- ValueError in TaskList.post(): {e} ---")  # Add this
+            return {'message': str(e)}, 400
         except Exception as e:
+            print(f"--- Exception in TaskList.post(): {e} ---") # Add this
             return {'message': 'An error occurred while creating tasks.'}, 500
 
 class TaskResource(Resource):
     @authenticate
     def get(self, user, task_id):
+        print(f"--- TaskResource.get() called with task_id: {task_id} ---")  # Add this
         task = TaskService.get_task(user.id, task_id)
         if task:
             return jsonify(task)
@@ -56,6 +62,7 @@ class TaskResource(Resource):
 
     @authenticate
     def put(self, user, task_id):
+        print(f"--- TaskResource.put() called with task_id: {task_id} ---")  # Add this
         args = task_update_parser.parse_args()
         try:
             due_date = datetime.strptime(args['due_date'], '%Y-%m-%d').date() if args['due_date'] else None
@@ -69,12 +76,15 @@ class TaskResource(Resource):
             else:
                 return {'message': 'Task not found'}, 404
         except ValueError as e:
+            print(f"--- ValueError in TaskResource.put(): {e} ---") # Add this
             return {'message': str(e)}, 400
         except Exception as e:
+            print(f"--- Exception in TaskResource.put(): {e} ---")  # Add this
             return {'message':"Update failed"}, 400
 
     @authenticate
     def delete(self, user, task_id):
+        print(f"--- TaskResource.delete() called with task_id: {task_id} ---")  # Add this
         if TaskService.delete_task(user.id, task_id):
             return {'message': 'Task deleted successfully'}, 200
         else:
@@ -82,12 +92,14 @@ class TaskResource(Resource):
 
     @authenticate
     def patch(self, user, task_id):  #For marking task complete
+        print(f"--- TaskResource.patch() called with task_id: {task_id} ---")  # Add this
         try:
             task = TaskService.mark_task_complete(user.id, task_id)
             if(task):
                 return jsonify(task), 200
             return {'message': 'Task not found'}, 404
         except Exception as e:
+            print(f"--- Exception in TaskResource.patch(): {e} ---")  # Add this
             return {'message':"Update failed"}, 400
 
 # --- Add resources to the API ---
