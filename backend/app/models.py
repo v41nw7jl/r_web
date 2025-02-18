@@ -1,5 +1,4 @@
 # backend/app/models.py
-
 from datetime import datetime
 from app import db, bcrypt
 
