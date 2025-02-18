@@ -1,8 +1,8 @@
 # backend/app/__init__.py
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify  # jsonify is good to have
 from flask_sqlalchemy import SQLAlchemy
-from flask_restful import Api
+from flask_restful import Api  # Make sure this is present!
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail
 from config import Config
@@ -19,16 +19,17 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     mail.init_app(app)
 
-    # Import and register blueprints - THESE ARE CRUCIAL
+    # --- CRUCIAL: Blueprint Registration ---
     from .routes.auth_routes import auth_bp
     from .routes.task_routes import task_bp
+
     app.register_blueprint(auth_bp)
     app.register_blueprint(task_bp)
 
-    # Add a root route - Keep this for now, but it's not the main focus
+    # --- Root Route (Keep for now) ---
     @app.route('/')
     def home():
-        print("--- Root route ('/') called ---")
+        print("--- Root route ('/') called ---")  # Keep this for now
         return "Welcome to the Flask Application!"
 
     return app
